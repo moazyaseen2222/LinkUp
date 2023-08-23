@@ -98,22 +98,23 @@ class SignInScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 70.h),
                 Text(
-                  'Aleady have an account?',
+                  'Already have an account?',
                   style: TextStyle(
                       fontFamily: AppFonts.firaSans,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500),
                 ),
-                SizedBox(height: 7.h),
 
-                Text(
-                  'Sign up here',
-                  style: TextStyle(
-                      fontFamily: AppFonts.firaSans,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.sp,
-                      color: AppColors.mainColors),
-                ),
+                TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Sign up here',
+                      style: TextStyle(
+                          fontFamily: AppFonts.firaSans,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.sp,
+                          color: AppColors.mainColors),
+                    )),
               ],
             ),
           ),
