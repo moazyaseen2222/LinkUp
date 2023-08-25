@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:link_up/constants/app_colors.dart';
 import 'package:link_up/constants/app_fonts.dart';
+import 'package:link_up/view/screens/sign_in.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+class SplashScreen extends StatefulWidget {
+  SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 2), () {
+      Get.to(SignInScreen());
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

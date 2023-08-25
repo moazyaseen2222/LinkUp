@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:link_up/constants/app_colors.dart';
-import 'package:link_up/constants/app_fonts.dart';
-import 'package:link_up/controller/sign_in_with_google_controller.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:link_up/controller/sign_up_controller.dart';
 
-class SignInWithGoogle extends StatelessWidget {
-  SignInWithGoogle({super.key});
+import '../../constants/app_colors.dart';
+import '../../constants/app_fonts.dart';
 
-  SignInWithGoogleController signInWithGoogleController =
-      Get.put(SignInWithGoogleController());
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({super.key});
+
+  SignUpController signUpController = Get.put(SignUpController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class SignInWithGoogle extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {
-                            signInWithGoogleController.back();
+                            signUpController.back();
                           },
                           icon: const Icon(
                             Icons.arrow_back_outlined,
@@ -59,7 +59,7 @@ class SignInWithGoogle extends StatelessWidget {
                         ),
                         SizedBox(height: 40.h),
                         Text(
-                          'Sign in with Google',
+                          'Sign Up',
                           style: TextStyle(
                               fontFamily: AppFonts.inter,
                               fontWeight: FontWeight.w600,
@@ -69,13 +69,12 @@ class SignInWithGoogle extends StatelessWidget {
 
                         /// Email
                         TextFormField(
-                          controller:
-                              signInWithGoogleController.emailController,
+                          controller: signUpController.emailController,
                           decoration: InputDecoration(
                               label: Padding(
                                 padding: EdgeInsets.only(left: 15.w),
                                 child: Text(
-                                  'Enter your gmail address',
+                                  'Enter Gmail ',
                                   style: TextStyle(
                                       fontFamily: AppFonts.inter,
                                       fontSize: 14.sp,
@@ -90,8 +89,7 @@ class SignInWithGoogle extends StatelessWidget {
 
                         /// Password
                         TextFormField(
-                          controller:
-                              signInWithGoogleController.passwordController,
+                          controller: signUpController.passwordController,
                           obscureText: true,
                           decoration: InputDecoration(
                               suffixIcon: Padding(
@@ -107,7 +105,7 @@ class SignInWithGoogle extends StatelessWidget {
                               label: Padding(
                                 padding: EdgeInsets.only(left: 15.w),
                                 child: Text(
-                                  'Enter your password',
+                                  'Enter Password',
                                   style: TextStyle(
                                       fontFamily: AppFonts.inter,
                                       fontSize: 14.sp,
@@ -118,20 +116,30 @@ class SignInWithGoogle extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8.r),
                               )),
                         ),
-                        SizedBox(height: 15.h),
-                        Padding(
-                          padding: EdgeInsets.only(right: 200.0.w),
-                          child: TextButton(
-                              onPressed: () {
-                                signInWithGoogleController.forgetPassword();
-                              },
-                              child: const Text(
-                                'Forget password?',
-                                style: TextStyle(
-                                    fontFamily: AppFonts.inter,
-                                    color: Colors.black),
-                              )),
-                        ),
+
+                        SizedBox(height: 18.h),
+
+                        /// Phone Number
+                        // TextFormField(
+                        //   controller: signUpController.phoneController,
+                        //   obscureText: true,
+                        //   keyboardType: TextInputType.phone,
+                        //   decoration: InputDecoration(
+                        //       label: Padding(
+                        //         padding: EdgeInsets.only(left: 15.w),
+                        //         child: Text(
+                        //           'Enter Phone Number',
+                        //           style: TextStyle(
+                        //               fontFamily: AppFonts.inter,
+                        //               fontSize: 14.sp,
+                        //               color: AppColors.formLabel),
+                        //         ),
+                        //       ),
+                        //       border: OutlineInputBorder(
+                        //         borderRadius: BorderRadius.circular(8.r),
+                        //       )),
+                        // ),
+
                         SizedBox(height: 163.h),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -139,14 +147,15 @@ class SignInWithGoogle extends StatelessWidget {
                               minimumSize: Size(319.w, 54.h),
                             ),
                             onPressed: () async {
-                              await signInWithGoogleController.signIn(
-                                  email: signInWithGoogleController
-                                      .emailController.text,
-                                  password: signInWithGoogleController
-                                      .passwordController.text);
+                              await signUpController.signUp(
+                                  email: signUpController.emailController.text,
+                                  password:
+                                      signUpController.passwordController.text);
+                              // phone:
+                              //     signUpController.passwordController.text);
                             },
                             child: Text(
-                              'Sign in',
+                              'Sign Up',
                               style: TextStyle(
                                   fontFamily: AppFonts.inter,
                                   fontSize: 18.sp,
@@ -154,7 +163,7 @@ class SignInWithGoogle extends StatelessWidget {
                             )),
                         SizedBox(height: 30.h),
                         Text(
-                          "Don't have an account?",
+                          "Already have an account?",
                           style: TextStyle(
                               fontFamily: AppFonts.inter,
                               fontSize: 14.sp,
@@ -162,10 +171,11 @@ class SignInWithGoogle extends StatelessWidget {
                         ),
                         TextButton(
                             onPressed: () {
-                              signInWithGoogleController.goToSignUp();
+
+                              signUpController.goToSignIn();
                             },
                             child: Text(
-                              'Sign up here',
+                              'Sign in here',
                               style: TextStyle(
                                   fontFamily: AppFonts.inter,
                                   fontWeight: FontWeight.bold,

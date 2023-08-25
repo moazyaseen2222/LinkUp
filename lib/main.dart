@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:link_up/view/screens/chat_screen.dart';
-import 'package:link_up/view/screens/chats_screen.dart';
-import 'package:link_up/view/screens/sign_in.dart';
-import 'package:link_up/view/screens/sign_in_with_google.dart';
-import 'package:link_up/view/screens/sign_up_profile.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:link_up/view/screens/sign_up_screen.dart';
 import 'package:link_up/view/screens/splash_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'https://tidtbxncflqjnojielnj.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpZHRieG5jZmxxam5vamllbG5qIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTI5ODQxMzAsImV4cCI6MjAwODU2MDEzMH0.eXbO-LSUWcmecvIi_CzrlT2vvvcDfFzmRSjz30a9UTk',
+  );
   runApp(const MyApp());
 }
 
@@ -20,8 +25,8 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (context, child) {
-        return MaterialApp(
-          home: ChatScreen(),
+        return GetMaterialApp(
+          home: SplashScreen(),
         );
       },
     );

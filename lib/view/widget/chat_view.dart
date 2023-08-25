@@ -39,7 +39,7 @@ class ChatView extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(width: 60.w),
+          SizedBox(width: 55.w),
           const Text(
             '2min ago',
             style: TextStyle(

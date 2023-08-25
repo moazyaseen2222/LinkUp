@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:link_up/view/widget/chat_view.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_fonts.dart';
@@ -141,17 +142,20 @@ class _ChatsScreenState extends State<ChatsScreen>
                                 Padding(
                                   padding:
                                       EdgeInsets.only(top: 90.0.h, left: 250.w),
-                                  child:
-                                  Container(
-                                    height: 70.h,
-                                    width: 70.w,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.mainColors,
-                                      borderRadius: BorderRadius.circular(50.r),
-                                    ),
-                                    child: IconButton(
+                                  child: Container(
+                                      height: 70.h,
+                                      width: 70.w,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.formLabel,
+                                        borderRadius:
+                                            BorderRadius.circular(50.r),
+                                      ),
+                                      child: Lottie.asset(
+                                        'lottie/loading3.json',
+                                        fit: BoxFit.cover
+                                      )
+                                      /*IconButton(
                                         onPressed: () {
-                                          //
                                         },
                                         icon: Image(
                                           height: 30.h,
@@ -159,8 +163,8 @@ class _ChatsScreenState extends State<ChatsScreen>
                                           image: const AssetImage(
                                             'images/chat_icon.png',
                                           ),
-                                        )),
-                                  ),
+                                        )),*/
+                                      ),
                                 ),
                               ],
                             ),

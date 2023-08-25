@@ -13,6 +13,7 @@ class SignInButton extends StatelessWidget {
   final String image;
   final String text;
 
+
   @override
   Widget build(BuildContext context) {
     return Padding(

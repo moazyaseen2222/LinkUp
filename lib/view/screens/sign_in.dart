@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:link_up/constants/app_colors.dart';
 import 'package:link_up/constants/app_fonts.dart';
+import 'package:link_up/controller/sign_in_methods_controller.dart';
 import 'package:link_up/view/widget/signInButton.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+  SignInScreen({super.key});
+
+  SignInMethodsController signInMethodsController =
+      Get.put(SignInMethodsController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +28,19 @@ class SignInScreen extends StatelessWidget {
                       fontFamily: AppFonts.inter,
                       fontWeight: FontWeight.bold,
                       fontSize: 60.sp,
-                      color: Colors.black),
+                      color: AppColors.mainColors
+                      // color: Colors.black
+                      ),
                 ),
 
                 /// Sign in with
                 SizedBox(height: 70.h),
-                const SignInButton(
-                  image: 'images/google.png',
-                  text: 'Sign in with Google',
+                InkWell(
+                  onTap: signInMethodsController.signInWithGoogleButton,
+                  child: const SignInButton(
+                    image: 'images/google.png',
+                    text: 'Sign in with Google',
+                  ),
                 ),
                 const SignInButton(
                   image: 'images/facebook.png',
@@ -106,7 +116,9 @@ class SignInScreen extends StatelessWidget {
                 ),
 
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      signInMethodsController.goToSignUpScreen();
+                    },
                     child: Text(
                       'Sign up here',
                       style: TextStyle(
