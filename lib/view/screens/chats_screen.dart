@@ -104,7 +104,7 @@ class _ChatsScreenState extends State<ChatsScreen>
                               ]),
                           labelColor: Colors.black,
                           labelStyle: TextStyle(
-                              fontFamily: AppFonts.firaSans,
+                              fontFamily: AppFonts.inter,
                               fontWeight: FontWeight.bold,
                               fontSize: 16.sp),
                           controller: _tabController,
@@ -132,15 +132,17 @@ class _ChatsScreenState extends State<ChatsScreen>
                             padding: EdgeInsets.symmetric(horizontal: 28.0.w),
                             child: Column(
                               children: [
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
+                                const ChatView(),
+                                const ChatView(),
+                                const ChatView(),
+                                const ChatView(),
+                                const ChatView(),
+                                const ChatView(),
                                 Padding(
-                                  padding:  EdgeInsets.only(top: 90.0.h,left: 250.w),
-                                  child: Container(
+                                  padding:
+                                      EdgeInsets.only(top: 90.0.h, left: 250.w),
+                                  child:
+                                  Container(
                                     height: 70.h,
                                     width: 70.w,
                                     decoration: BoxDecoration(
@@ -154,7 +156,7 @@ class _ChatsScreenState extends State<ChatsScreen>
                                         icon: Image(
                                           height: 30.h,
                                           width: 30.w,
-                                          image: AssetImage(
+                                          image: const AssetImage(
                                             'images/chat_icon.png',
                                           ),
                                         )),

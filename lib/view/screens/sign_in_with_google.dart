@@ -33,7 +33,7 @@ class SignInWithGoogle extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16.sp,
-                              fontFamily: AppFonts.firaSans,
+                              fontFamily: AppFonts.inter,
                               color: AppColors.mainColors),
                         )
                       ],
@@ -47,7 +47,7 @@ class SignInWithGoogle extends StatelessWidget {
                         Text(
                           'LinkUp.',
                           style: TextStyle(
-                              fontFamily: AppFonts.firaSans,
+                              fontFamily: AppFonts.inter,
                               fontSize: 40.sp,
                               fontWeight: FontWeight.bold),
                         ),
@@ -55,7 +55,7 @@ class SignInWithGoogle extends StatelessWidget {
                         Text(
                           'Sign in with Google',
                           style: TextStyle(
-                              fontFamily: AppFonts.firaSans,
+                              fontFamily: AppFonts.inter,
                               fontWeight: FontWeight.w600,
                               fontSize: 18.sp),
                         ),
@@ -69,7 +69,7 @@ class SignInWithGoogle extends StatelessWidget {
                                 child: Text(
                                   'Enter your gmail address',
                                   style: TextStyle(
-                                      fontFamily: AppFonts.firaSans,
+                                      fontFamily: AppFonts.inter,
                                       fontSize: 14.sp,
                                       color: AppColors.formLabel),
                                 ),
@@ -101,7 +101,7 @@ class SignInWithGoogle extends StatelessWidget {
                                 child: Text(
                                   'Enter your password',
                                   style: TextStyle(
-                                      fontFamily: AppFonts.firaSans,
+                                      fontFamily: AppFonts.inter,
                                       fontSize: 14.sp,
                                       color: AppColors.formLabel),
                                 ),
@@ -120,7 +120,7 @@ class SignInWithGoogle extends StatelessWidget {
                               child: const Text(
                                 'Forget password?',
                                 style: TextStyle(
-                                    fontFamily: AppFonts.firaSans,
+                                    fontFamily: AppFonts.inter,
                                     color: Colors.black),
                               )),
                         ),
@@ -135,7 +135,7 @@ class SignInWithGoogle extends StatelessWidget {
                             child: Text(
                               'Sign in',
                               style: TextStyle(
-                                  fontFamily: AppFonts.firaSans,
+                                  fontFamily: AppFonts.inter,
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w500),
                             )),
@@ -143,7 +143,7 @@ class SignInWithGoogle extends StatelessWidget {
                         Text(
                           'Already have an account?',
                           style: TextStyle(
-                              fontFamily: AppFonts.firaSans,
+                              fontFamily: AppFonts.inter,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500),
                         ),
@@ -154,7 +154,7 @@ class SignInWithGoogle extends StatelessWidget {
                             child: Text(
                               'Sign up here',
                               style: TextStyle(
-                                  fontFamily: AppFonts.firaSans,
+                                  fontFamily: AppFonts.inter,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14.sp,
                                   color: AppColors.mainColors),

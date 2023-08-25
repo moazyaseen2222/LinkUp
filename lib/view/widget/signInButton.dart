@@ -43,7 +43,7 @@ class SignInButton extends StatelessWidget {
             Text(
               text,
               style: TextStyle(
-                  fontFamily: AppFonts.firaSans,
+                  fontFamily: AppFonts.inter,
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
                   color: Colors.black),

@@ -43,7 +43,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16.sp,
-                              fontFamily: AppFonts.firaSans,
+                              fontFamily: AppFonts.inter,
                               color: AppColors.mainColors),
                         ),
                         SizedBox(width: 70.w),
@@ -52,7 +52,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16.sp,
-                            fontFamily: AppFonts.firaSans,
+                            fontFamily: AppFonts.inter,
                           ),
                         )
                       ],
@@ -103,7 +103,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
                                 child: Text(
                                   'User Name',
                                   style: TextStyle(
-                                      fontFamily: AppFonts.firaSans,
+                                      fontFamily: AppFonts.inter,
                                       fontSize: 14.sp,
                                       color: AppColors.formLabel),
                                 ),
@@ -122,7 +122,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
                                 child: Text(
                                   'Bio',
                                   style: TextStyle(
-                                      fontFamily: AppFonts.firaSans,
+                                      fontFamily: AppFonts.inter,
                                       fontSize: 14.sp,
                                       color: AppColors.formLabel),
                                 ),
@@ -149,7 +149,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
                               child: RadioListTile<Gender>(
                                 title: const Text('Male',
                                     style: TextStyle(
-                                        fontFamily: AppFonts.firaSans)),
+                                        fontFamily: AppFonts.inter)),
                                 value: Gender.male,
                                 groupValue: selectedGender,
                                 onChanged: (Gender? value) {
@@ -171,7 +171,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
                                 title: const Text(
                                   'Female',
                                   style:
-                                      TextStyle(fontFamily: AppFonts.firaSans),
+                                      TextStyle(fontFamily: AppFonts.inter),
                                 ),
                                 value: Gender.female,
                                 groupValue: selectedGender,
@@ -198,7 +198,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
                             child: Text(
                               'Complete',
                               style: TextStyle(
-                                  fontFamily: AppFonts.firaSans,
+                                  fontFamily: AppFonts.inter,
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w500),
                             )),

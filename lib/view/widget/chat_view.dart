@@ -25,7 +25,7 @@ class ChatView extends StatelessWidget {
               Text(
                 'Annette Black',
                 style: TextStyle(
-                    fontFamily: AppFonts.firaSans,
+                    fontFamily: AppFonts.inter,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600),
               ),
@@ -33,7 +33,7 @@ class ChatView extends StatelessWidget {
               Text(
                 'Hey, did you talk to her?',
                 style: TextStyle(
-                    fontFamily: AppFonts.firaSans,
+                    fontFamily: AppFonts.inter,
                     fontSize: 14.sp,
                     color: Colors.grey.shade600),
               ),
@@ -43,7 +43,7 @@ class ChatView extends StatelessWidget {
           const Text(
             '2min ago',
             style: TextStyle(
-              fontFamily: AppFonts.firaSans,
+              fontFamily: AppFonts.inter,
             ),
           ),
         ],

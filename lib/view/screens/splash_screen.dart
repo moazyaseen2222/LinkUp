@@ -17,7 +17,7 @@ class SplashScreen extends StatelessWidget {
           Text(
             'LinkUp',
             style: TextStyle(
-                fontFamily: AppFonts.firaSans,
+                fontFamily: AppFonts.inter,
                 color: Colors.white,
                 fontSize: 50.sp,
                 fontWeight: FontWeight.bold),
@@ -25,7 +25,7 @@ class SplashScreen extends StatelessWidget {
           Text(
             '.',
             style: TextStyle(
-                fontFamily: AppFonts.firaSans,
+                fontFamily: AppFonts.inter,
                 color: Colors.black,
                 fontSize: 50.sp,
                 fontWeight: FontWeight.bold),

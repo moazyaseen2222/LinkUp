@@ -20,7 +20,7 @@ class SignInScreen extends StatelessWidget {
                 Text(
                   'LinkUp.',
                   style: TextStyle(
-                      fontFamily: AppFonts.firaSans,
+                      fontFamily: AppFonts.inter,
                       fontWeight: FontWeight.bold,
                       fontSize: 60.sp,
                       color: Colors.black),
@@ -56,7 +56,7 @@ class SignInScreen extends StatelessWidget {
                     ),
                     const Text(
                       'or',
-                      style: TextStyle(fontFamily: AppFonts.firaSans),
+                      style: TextStyle(fontFamily: AppFonts.inter),
                     ),
                     Expanded(
                       child: Divider(
@@ -90,7 +90,7 @@ class SignInScreen extends StatelessWidget {
                     child: Text(
                       'Continue with phone number',
                       style: TextStyle(
-                          fontFamily: AppFonts.firaSans,
+                          fontFamily: AppFonts.inter,
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w500),
                     ),
@@ -100,7 +100,7 @@ class SignInScreen extends StatelessWidget {
                 Text(
                   'Already have an account?',
                   style: TextStyle(
-                      fontFamily: AppFonts.firaSans,
+                      fontFamily: AppFonts.inter,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500),
                 ),
@@ -110,7 +110,7 @@ class SignInScreen extends StatelessWidget {
                     child: Text(
                       'Sign up here',
                       style: TextStyle(
-                          fontFamily: AppFonts.firaSans,
+                          fontFamily: AppFonts.inter,
                           fontWeight: FontWeight.bold,
                           fontSize: 14.sp,
                           color: AppColors.mainColors),

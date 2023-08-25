@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:link_up/view/screens/chat_screen.dart';
 import 'package:link_up/view/screens/chats_screen.dart';
 import 'package:link_up/view/screens/sign_in.dart';
 import 'package:link_up/view/screens/sign_in_with_google.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       builder: (context, child) {
         return MaterialApp(
-          home: ChatsScreen(),
+          home: ChatScreen(),
         );
       },
     );
