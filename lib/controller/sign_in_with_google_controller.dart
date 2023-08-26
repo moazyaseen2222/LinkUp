@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:link_up/constants/app_colors.dart';
 import 'package:link_up/view/screens/chats_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignInWithGoogleController extends GetxController {
@@ -11,6 +10,7 @@ class SignInWithGoogleController extends GetxController {
   TextEditingController passwordController = TextEditingController();
 
   RxBool isSeen = false.obs;
+  RxBool isLogged = false.obs;
 
   @override
   void onInit() {
@@ -41,9 +41,6 @@ class SignInWithGoogleController extends GetxController {
   forgetPassword() {}
 
   Future signIn({required String email, required String password}) async {
-
-
-
     final supabase = Supabase.instance.client;
 
     // Call the signIn method with email and password
@@ -53,6 +50,11 @@ class SignInWithGoogleController extends GetxController {
     );
 
     if (response.user != null) {
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+
+      sharedPreferences.setBool('isLogged', true);
+
       Get.to(ChatsScreen());
       print('User Login Tamam!');
     } else {

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:link_up/view/widget/chat_view.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_fonts.dart';
+import '../../controller/chats_controller.dart';
 
 class ChatsScreen extends StatefulWidget {
-  const ChatsScreen({super.key});
+  ChatsScreen({super.key});
 
   @override
   State<ChatsScreen> createState() => _ChatsScreenState();
@@ -16,6 +17,7 @@ class ChatsScreen extends StatefulWidget {
 class _ChatsScreenState extends State<ChatsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController = TabController(length: 2, vsync: this);
+  ChatsController chatsController = Get.put(ChatsController());
 
   @override
   void initState() {
@@ -26,158 +28,181 @@ class _ChatsScreenState extends State<ChatsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          bottom: true,
-          child: ListView(
+      appBar: AppBar(
+        backgroundColor: AppColors.mainColors,
+        title: const Text(
+          'LinkUp',
+          style: TextStyle(
+            fontFamily: AppFonts.inter,
+          ),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+            tooltip: 'Logout',
+            onPressed: () {
+              chatsController.logout();
+            },
+            icon: const Icon(Icons.logout_sharp)),
+      ),
+      body: ListView(
+        children: [
+          Column(
             children: [
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Stack(
                       children: [
-                        Stack(
-                          children: [
-                            ///Image
-                            CircleAvatar(
-                              radius: 25.r,
-                              backgroundImage: const AssetImage(
-                                'images/person.png',
-                              ),
-                            ),
-
-                            /// Online Point
-                            Padding(
-                              padding: EdgeInsets.only(top: 38.0.h, left: 35.w),
-                              child: Container(
-                                height: 12.h,
-                                width: 12.w,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.white),
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(50.r)),
-                              ),
-                            ),
-                          ],
+                        ///Image
+                        CircleAvatar(
+                          radius: 25.r,
+                          backgroundImage: const AssetImage(
+                            'images/person.png',
+                          ),
                         ),
 
-                        /// Search icon
-                        IconButton(
-                            onPressed: () {
-                              ///
-                            },
-                            icon: const Icon(
-                              Icons.search_outlined,
-                              size: 24,
-                            ))
+                        /// Online Point
+                        Padding(
+                          padding: EdgeInsets.only(top: 38.0.h, left: 35.w),
+                          child: Container(
+                            height: 12.h,
+                            width: 12.w,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white),
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(50.r)),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    /// Search icon
+                    IconButton(
+                        tooltip: 'Search',
+                        onPressed: () {
+                          ///
+                        },
+                        icon: const Icon(
+                          Icons.search_outlined,
+                          size: 24,
+                        ))
+                  ],
+                ),
+              ),
+
+              /// Tab Bar
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.0.w),
+                child: Container(
+                  height: 52.h,
+                  width: 327.w,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(7.r)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TabBar(
+                      onTap: (int index) {
+                        setState(() {
+                          _tabController.index = index;
+                        });
+                      },
+                      indicator: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.r),
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.grey,
+                                spreadRadius: 1,
+                                offset: Offset(1, 2),
+                                blurRadius: 2),
+                          ]),
+                      labelColor: Colors.black,
+                      labelStyle: TextStyle(
+                          fontFamily: AppFonts.inter,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp),
+                      controller: _tabController,
+                      tabs: const [
+                        Tab(
+                          text: 'Chat',
+                        ),
+                        Tab(
+                          text: 'Call',
+                        )
                       ],
                     ),
                   ),
-                  SizedBox(height: 20.h),
+                ),
+              ),
 
-                  /// Tan Bar
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.0.w),
-                    child: Container(
-                      height: 52.h,
-                      width: 327.w,
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(7.r)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: TabBar(
-                          onTap: (int index) {
-                            setState(() {
-                              _tabController.index = index;
-                            });
-                          },
-                          indicator: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8.r),
-                              boxShadow: const [
-                                BoxShadow(
-                                    color: Colors.grey,
-                                    spreadRadius: 1,
-                                    offset: Offset(1, 2),
-                                    blurRadius: 2),
-                              ]),
-                          labelColor: Colors.black,
-                          labelStyle: TextStyle(
-                              fontFamily: AppFonts.inter,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.sp),
-                          controller: _tabController,
-                          tabs: const [
-                            Tab(
-                              text: 'Chat',
+              /// Tab bar view
+
+              Column(
+                children: [
+                  IndexedStack(
+                    index: _tabController.index,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 28.0.w),
+                        child: const Stack(
+                          children: [
+                            Column(
+                              children: [
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                                ChatView(),
+                              ],
                             ),
-                            Tab(
-                              text: 'Call',
-                            )
                           ],
                         ),
                       ),
-                    ),
-                  ),
-
-                  /// Tab bar view
-
-                  Column(
-                    children: [
-                      IndexedStack(
-                        index: _tabController.index,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 28.0.w),
-                            child: Column(
-                              children: [
-                                const ChatView(),
-                                const ChatView(),
-                                const ChatView(),
-                                const ChatView(),
-                                const ChatView(),
-                                const ChatView(),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(top: 90.0.h, left: 250.w),
-                                  child: Container(
-                                      height: 70.h,
-                                      width: 70.w,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.formLabel,
-                                        borderRadius:
-                                            BorderRadius.circular(50.r),
-                                      ),
-                                      child: Lottie.asset(
-                                        'lottie/loading3.json',
-                                        fit: BoxFit.cover
-                                      )
-                                      /*IconButton(
-                                        onPressed: () {
-                                        },
-                                        icon: Image(
-                                          height: 30.h,
-                                          width: 30.w,
-                                          image: const AssetImage(
-                                            'images/chat_icon.png',
-                                          ),
-                                        )),*/
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 20.h),
-                        ],
-                      )
+                      SizedBox(height: 20.h),
                     ],
                   )
                 ],
               ),
             ],
-          )),
+          ),
+        ],
+      ),
+      floatingActionButton: Container(
+        height: 70.w,
+        width: 70.w,
+        decoration: BoxDecoration(
+          color: AppColors.mainColors,
+          borderRadius: BorderRadius.circular(40.r),
+        ),
+        child: FloatingActionButton(
+          backgroundColor: AppColors.mainColors,
+          tooltip: 'New Chat',
+          onPressed: () {
+            ///
+          },
+          child: IconButton(
+              onPressed: () {},
+              icon: Image(
+                height: 30.h,
+                width: 30.w,
+                image: const AssetImage(
+                  'images/chat_icon.png',
+                ),
+              )),
+        ),
+      ),
     );
   }
 }
