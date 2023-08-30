@@ -47,14 +47,14 @@ class SignInScreen extends StatelessWidget {
                 const SignInButton(
                   image: 'images/facebook.png',
                   text: 'Sign in with Facebook',
-                  theColor: AppColors.formLabel,
-                  isAvailable: false,
+                  theColor: Colors.white,
+                  isAvailable: true,
                 ),
                 const SignInButton(
                   image: 'images/apple.png',
                   text: 'Sign in with Apple',
-                  theColor: AppColors.formLabel,
-                  isAvailable: false,
+                  theColor: Colors.white,
+                  isAvailable: true,
                 ),
 
                 /// or

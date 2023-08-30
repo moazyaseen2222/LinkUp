@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:link_up/view/screens/chats_screen.dart';
+import 'package:link_up/constants/app_routes.dart';
+import 'package:link_up/view/screens/sign_up_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -40,7 +41,7 @@ class SignInWithGoogleController extends GetxController {
 
   forgetPassword() {}
 
-  Future signIn({required String email, required String password}) async {
+  Future<bool> signIn({required String email, required String password}) async {
     final supabase = Supabase.instance.client;
 
     // Call the signIn method with email and password
@@ -55,12 +56,14 @@ class SignInWithGoogleController extends GetxController {
 
       sharedPreferences.setBool('isLogged', true);
 
-      Get.to(ChatsScreen());
-      print('User Login Tamam!');
+      Get.offNamed(AppRoutes.chats);
+      return true;
     } else {
-      print('User Login No Tamam!');
+      return false;
     }
   }
 
-  goToSignUp() {}
+  goToSignUp() {
+    Get.to(SignUpScreen());
+  }
 }

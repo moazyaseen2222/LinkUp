@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:link_up/constants/app_colors.dart';
 import 'package:link_up/constants/app_fonts.dart';
+import 'package:link_up/constants/app_utils.dart';
 import 'package:link_up/controller/sign_in_with_google_controller.dart';
+import 'package:supabase/supabase.dart';
 
 class SignInWithGoogle extends StatelessWidget {
   SignInWithGoogle({super.key});
 
   SignInWithGoogleController signInWithGoogleController =
       Get.put(SignInWithGoogleController());
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,56 +72,89 @@ class SignInWithGoogle extends StatelessWidget {
                         SizedBox(height: 40.h),
 
                         /// Email
-                        TextFormField(
-                          controller:
-                              signInWithGoogleController.emailController,
-                          decoration: InputDecoration(
-                              label: Padding(
-                                padding: EdgeInsets.only(left: 15.w),
-                                child: Text(
-                                  'Enter your gmail address',
-                                  style: TextStyle(
-                                      fontFamily: AppFonts.inter,
-                                      fontSize: 14.sp,
-                                      color: AppColors.formLabel),
-                                ),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                              )),
-                        ),
-                        SizedBox(height: 18.h),
+                        Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  /// Validate the email syntax and is not empty
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Enter the email !';
+                                    }
+                                    // Regular expression pattern for email validation
+                                    final emailRegex = RegExp(
+                                        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
 
-                        /// Password
-                        TextFormField(
-                          controller:
-                              signInWithGoogleController.passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              suffixIcon: Padding(
-                                padding: EdgeInsets.only(right: 16.w),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.remove_red_eye,
-                                    color: AppColors.formLabel,
-                                  ),
+                                    if (!emailRegex.hasMatch(value)) {
+                                      return 'Please enter a valid email address';
+                                    }
+
+                                    return null;
+                                  },
+
+                                  ///
+
+                                  controller: signInWithGoogleController
+                                      .emailController,
+                                  decoration: InputDecoration(
+                                      label: Padding(
+                                        padding: EdgeInsets.only(left: 15.w),
+                                        child: Text(
+                                          'Enter your email',
+                                          style: TextStyle(
+                                              fontFamily: AppFonts.inter,
+                                              fontSize: 14.sp,
+                                              color: AppColors.formLabel),
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                      )),
                                 ),
-                              ),
-                              label: Padding(
-                                padding: EdgeInsets.only(left: 15.w),
-                                child: Text(
-                                  'Enter your password',
-                                  style: TextStyle(
-                                      fontFamily: AppFonts.inter,
-                                      fontSize: 14.sp,
-                                      color: AppColors.formLabel),
+                                SizedBox(height: 15.h),
+
+                                /// Password
+                                TextFormField(
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Enter the password !';
+                                    }
+                                    return null;
+                                  },
+                                  controller: signInWithGoogleController
+                                      .passwordController,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                      suffixIcon: Padding(
+                                        padding: EdgeInsets.only(right: 16.w),
+                                        child: IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            Icons.remove_red_eye,
+                                            color: AppColors.formLabel,
+                                          ),
+                                        ),
+                                      ),
+                                      label: Padding(
+                                        padding: EdgeInsets.only(left: 15.w),
+                                        child: Text(
+                                          'Enter your password',
+                                          style: TextStyle(
+                                              fontFamily: AppFonts.inter,
+                                              fontSize: 14.sp,
+                                              color: AppColors.formLabel),
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                      )),
                                 ),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                              )),
-                        ),
+                              ],
+                            )),
+
                         SizedBox(height: 15.h),
                         Padding(
                           padding: EdgeInsets.only(right: 200.0.w),
@@ -138,11 +176,35 @@ class SignInWithGoogle extends StatelessWidget {
                               minimumSize: Size(319.w, 54.h),
                             ),
                             onPressed: () async {
-                              await signInWithGoogleController.signIn(
-                                  email: signInWithGoogleController
-                                      .emailController.text,
-                                  password: signInWithGoogleController
-                                      .passwordController.text);
+                              if (_formKey.currentState!.validate()) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const SpinKitCircle(
+                                        color: AppColors.mainColors,
+                                      );
+                                    });
+
+                                try {
+                                  await signInWithGoogleController.signIn(
+                                      email: signInWithGoogleController
+                                          .emailController.text,
+                                      password: signInWithGoogleController
+                                          .passwordController.text);
+                                  Future.delayed(
+                                      const Duration(milliseconds: 600), () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      AppUtils.welcomeBackSnakBar,
+                                    );
+                                  });
+                                } catch (e) {
+                                  if (e is AuthException) {
+                                    Get.back();
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(AppUtils.userNoFound);
+                                  }
+                                }
+                              }
                             },
                             child: Text(
                               'Sign in',
