@@ -3,6 +3,7 @@ import 'package:link_up/constants/app_routes.dart';
 
 import '../view/screens/chat_screen.dart';
 import '../view/screens/chats_screen.dart';
+import '../view/screens/forget_password.dart';
 import '../view/screens/sign_in.dart';
 import '../view/screens/sign_in_with_google.dart';
 import '../view/screens/sign_up_profile.dart';
@@ -17,4 +18,6 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoutes.signUpProfile, page: () => const SignUpProfile()),
   GetPage(name: AppRoutes.chats, page: () => ChatsScreen()),
   GetPage(name: AppRoutes.chat, page: () => const ChatScreen()),
+  GetPage(
+      name: AppRoutes.forgetPassword, page: () =>  ForgetPasswordScreen()),
 ];

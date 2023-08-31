@@ -116,42 +116,51 @@ class SignInWithGoogle extends StatelessWidget {
                                 SizedBox(height: 15.h),
 
                                 /// Password
-                                TextFormField(
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter the password !';
-                                    }
-                                    return null;
-                                  },
-                                  controller: signInWithGoogleController
-                                      .passwordController,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                      suffixIcon: Padding(
-                                        padding: EdgeInsets.only(right: 16.w),
-                                        child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.remove_red_eye,
-                                            color: AppColors.formLabel,
+                                Obx(() {
+                                  return TextFormField(
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Enter the password !';
+                                      }
+                                      return null;
+                                    },
+                                    controller: signInWithGoogleController
+                                        .passwordController,
+                                    obscureText:
+                                        signInWithGoogleController.isSeen.value,
+                                    decoration: InputDecoration(
+                                        suffixIcon: Padding(
+                                          padding: EdgeInsets.only(right: 16.w),
+                                          child: IconButton(
+                                            onPressed: () {
+                                              signInWithGoogleController
+                                                  .changeVision();
+                                            },
+                                            icon: Icon(
+                                              Icons.remove_red_eye,
+                                              color: signInWithGoogleController
+                                                      .isSeen.value
+                                                  ? AppColors.mainColors
+                                                  : AppColors.formLabel,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      label: Padding(
-                                        padding: EdgeInsets.only(left: 15.w),
-                                        child: Text(
-                                          'Enter your password',
-                                          style: TextStyle(
-                                              fontFamily: AppFonts.inter,
-                                              fontSize: 14.sp,
-                                              color: AppColors.formLabel),
+                                        label: Padding(
+                                          padding: EdgeInsets.only(left: 15.w),
+                                          child: Text(
+                                            'Enter your password',
+                                            style: TextStyle(
+                                                fontFamily: AppFonts.inter,
+                                                fontSize: 14.sp,
+                                                color: AppColors.formLabel),
+                                          ),
                                         ),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                      )),
-                                ),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                        )),
+                                  );
+                                })
                               ],
                             )),
 
@@ -194,14 +203,27 @@ class SignInWithGoogle extends StatelessWidget {
                                   Future.delayed(
                                       const Duration(milliseconds: 600), () {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      AppUtils.welcomeBackSnakBar,
+                                      AppUtils.welcomeBack,
                                     );
                                   });
                                 } catch (e) {
                                   if (e is AuthException) {
                                     Get.back();
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(AppUtils.userNoFound);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          duration: const Duration(seconds: 2),
+                                          backgroundColor: Colors.red.shade400,
+                                          content: Text(
+                                            e.message ==
+                                                    'Invalid login credentials'
+                                                ? 'User not found'
+                                                : e.message,
+                                            style: const TextStyle(
+                                              fontFamily: AppFonts.inter,
+                                              color: Colors.white,
+                                            ),
+                                          )),
+                                    );
                                   }
                                 }
                               }

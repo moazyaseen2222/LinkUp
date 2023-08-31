@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:link_up/controller/sign_up_controller.dart';
+import 'package:link_up/constants/app_utils.dart';
 import 'package:supabase/supabase.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_fonts.dart';
-import '../../constants/app_utils.dart';
+import '../../controller/forget_password_controller.dart';
 
-class SignUpScreen extends StatelessWidget {
-  SignUpScreen({super.key});
+class ForgetPasswordScreen extends StatelessWidget {
+  ForgetPasswordScreen({super.key});
 
-  SignUpController signUpController = Get.put(SignUpController());
+  ForgetPasswordController forgetPasswordController =
+      Get.put(ForgetPasswordController());
 
   final _formKey = GlobalKey<FormState>();
 
@@ -31,9 +31,7 @@ class SignUpScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         IconButton(
-                          onPressed: () {
-                            signUpController.back();
-                          },
+                          onPressed: () {},
                           icon: const Icon(
                             Icons.arrow_back_outlined,
                             color: AppColors.mainColors,
@@ -64,7 +62,7 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 40.h),
                         Text(
-                          'Sign Up',
+                          'Reset Password',
                           style: TextStyle(
                               fontFamily: AppFonts.inter,
                               fontWeight: FontWeight.w600,
@@ -72,11 +70,11 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 40.h),
 
+                        /// Email
                         Form(
                             key: _formKey,
                             child: Column(
                               children: [
-                                /// Email
                                 TextFormField(
                                   /// Validate the email syntax and is not empty
                                   validator: (value) {
@@ -93,51 +91,17 @@ class SignUpScreen extends StatelessWidget {
 
                                     return null;
                                   },
-                                  controller: signUpController.emailController,
-                                  decoration: InputDecoration(
-                                      label: Padding(
-                                        padding: EdgeInsets.only(left: 15.w),
-                                        child: Text(
-                                          'Enter Gmail ',
-                                          style: TextStyle(
-                                              fontFamily: AppFonts.inter,
-                                              fontSize: 14.sp,
-                                              color: AppColors.formLabel),
-                                        ),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                      )),
-                                ),
-                                SizedBox(height: 18.h),
 
-                                /// Password
-                                TextFormField(
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter the password !';
-                                    }
-                                    return null;
-                                  },
-                                  controller:
-                                      signUpController.passwordController,
-                                  obscureText: true,
+                                  ///
+
+                                  controller: forgetPasswordController
+                                      .emailTextController,
+
                                   decoration: InputDecoration(
-                                      suffixIcon: Padding(
-                                        padding: EdgeInsets.only(right: 16.w),
-                                        child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.remove_red_eye,
-                                            color: AppColors.formLabel,
-                                          ),
-                                        ),
-                                      ),
                                       label: Padding(
                                         padding: EdgeInsets.only(left: 15.w),
                                         child: Text(
-                                          'Enter Password',
+                                          'Enter your email',
                                           style: TextStyle(
                                               fontFamily: AppFonts.inter,
                                               fontSize: 14.sp,
@@ -149,33 +113,45 @@ class SignUpScreen extends StatelessWidget {
                                             BorderRadius.circular(8.r),
                                       )),
                                 ),
+                                SizedBox(height: 15.h),
+                      TextFormField(
+                        // enabled: forgetPasswordController
+                        //     .isEnabeld.value,
+
+                        /// Trying to reset password
+
+                        /// Validate the email syntax and is not empty
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter the the new password !';
+                          }
+
+                          return null;
+                        },
+
+                        controller: forgetPasswordController
+                            .newPasswordController,
+
+                        decoration: InputDecoration(
+                            label: Padding(
+                              padding: EdgeInsets.only(left: 15.w),
+                              child: Text(
+                                'New Password',
+                                style: TextStyle(
+                                    fontFamily: AppFonts.inter,
+                                    fontSize: 14.sp,
+                                    color: AppColors.formLabel),
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.circular(8.r),
+                            )),
+                      ),
+                                SizedBox(height: 15.h),
                               ],
                             )),
 
-                        SizedBox(height: 18.h),
-
-                        /// Phone Number
-                        // TextFormField(
-                        //   controller: signUpController.phoneController,
-                        //   obscureText: true,
-                        //   keyboardType: TextInputType.phone,
-                        //   decoration: InputDecoration(
-                        //       label: Padding(
-                        //         padding: EdgeInsets.only(left: 15.w),
-                        //         child: Text(
-                        //           'Enter Phone Number',
-                        //           style: TextStyle(
-                        //               fontFamily: AppFonts.inter,
-                        //               fontSize: 14.sp,
-                        //               color: AppColors.formLabel),
-                        //         ),
-                        //       ),
-                        //       border: OutlineInputBorder(
-                        //         borderRadius: BorderRadius.circular(8.r),
-                        //       )),
-                        // ),
-
-                        SizedBox(height: 163.h),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.mainColors,
@@ -192,52 +168,38 @@ class SignUpScreen extends StatelessWidget {
                                     });
 
                                 try {
-                                  await signUpController.signUp(
-                                      email:
-                                          signUpController.emailController.text,
-                                      password: signUpController
-                                          .passwordController.text);
-                                  Future.delayed(
-                                      const Duration(milliseconds: 600), () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      AppUtils.confirmYourEmail,
-                                    );
-                                  });
+                                  await forgetPasswordController.sendCheck(
+                                      forgetPasswordController
+                                          .emailTextController.text);
+                                  AppUtils.confirmYourEmail;
                                 } catch (e) {
                                   if (e is AuthException) {
                                     Get.back();
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(AppUtils.tryAgain);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          duration: const Duration(seconds: 2),
+                                          backgroundColor: Colors.red.shade400,
+                                          content: Text(
+                                            e.message ==
+                                                    'Invalid login credentials'
+                                                ? 'Email not found'
+                                                : e.message,
+                                            style: const TextStyle(
+                                              fontFamily: AppFonts.inter,
+                                              color: Colors.white,
+                                            ),
+                                          )),
+                                    );
                                   }
                                 }
                               }
                             },
                             child: Text(
-                              'Sign Up',
+                              'Send Email',
                               style: TextStyle(
                                   fontFamily: AppFonts.inter,
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w500),
-                            )),
-                        SizedBox(height: 30.h),
-                        Text(
-                          "Already have an account?",
-                          style: TextStyle(
-                              fontFamily: AppFonts.inter,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              signUpController.goToSignIn();
-                            },
-                            child: Text(
-                              'Sign in here',
-                              style: TextStyle(
-                                  fontFamily: AppFonts.inter,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14.sp,
-                                  color: AppColors.mainColors),
                             )),
                       ],
                     ),

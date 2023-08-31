@@ -33,7 +33,9 @@ class _ChatsScreenState extends State<ChatsScreen>
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
-            tabs: [
+            padding:  const EdgeInsets.all(5),
+            unselectedLabelStyle: const TextStyle(fontFamily: AppFonts.inter),
+            tabs: const [
               Tab(
                 text: 'Chat',
               ),
@@ -41,29 +43,16 @@ class _ChatsScreenState extends State<ChatsScreen>
                 text: 'Call',
               )
             ],
-            // onTap: (int index) {
-            //   setState(() {
-            //     _tabController.index = index;
-            //   });
-            // },
             indicator: BoxDecoration(
               border: Border.all(width: 3, color: AppColors.mainColors),
               color: Colors.white,
               borderRadius: BorderRadius.circular(8.r),
-              // boxShadow: const [
-              //   BoxShadow(
-              //       color: Colors.white,
-              //       spreadRadius: 1,
-              //       offset: Offset(1, 2),
-              //       blurRadius: 2),
-              // ],
             ),
             labelColor: Colors.black,
             labelStyle: TextStyle(
                 fontFamily: AppFonts.inter,
                 fontWeight: FontWeight.bold,
                 fontSize: 16.sp),
-            // controller: _tabController,
           ),
           backgroundColor: AppColors.mainColors,
           title: const Text(
@@ -86,7 +75,6 @@ class _ChatsScreenState extends State<ChatsScreen>
               child: Column(
                 children: [
                   IndexedStack(
-                    //  index: _tabController.index,
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 28.0.w),
@@ -125,7 +113,6 @@ class _ChatsScreenState extends State<ChatsScreen>
               child: Column(
                 children: [
                   IndexedStack(
-                    // index: _tabController.index,
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.0.w),

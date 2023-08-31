@@ -7,4 +7,5 @@ class AppRoutes {
   static const String signUpProfile = '/signUp_profile_screen';
   static const String chats = '/chats_screen';
   static const String chat = '/chat_screen';
+  static const String forgetPassword = '/forget_password_screen';
 }

@@ -2,15 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:link_up/constants/app_routes.dart';
-import 'package:link_up/view/screens/sign_up_screen.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../view/screens/forget_password.dart';
 
 class SignInWithGoogleController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  RxBool isSeen = false.obs;
+  RxBool isSeen = true.obs;
   RxBool isLogged = false.obs;
 
   @override
@@ -28,7 +30,7 @@ class SignInWithGoogleController extends GetxController {
   }
 
   back() {
-    Get.back();
+    Get.offAllNamed(AppRoutes.signIn);
   }
 
   changeVision() {
@@ -39,12 +41,13 @@ class SignInWithGoogleController extends GetxController {
     }
   }
 
-  forgetPassword() {}
+  forgetPassword() {
+    Get.to(() =>  ForgetPasswordScreen());
+  }
 
-  Future<bool> signIn({required String email, required String password}) async {
+  Future signIn({required String email, required String password}) async {
     final supabase = Supabase.instance.client;
 
-    // Call the signIn method with email and password
     final response = await supabase.auth.signInWithPassword(
       email: email,
       password: password,
@@ -53,17 +56,13 @@ class SignInWithGoogleController extends GetxController {
     if (response.user != null) {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
-
       sharedPreferences.setBool('isLogged', true);
-
-      Get.offNamed(AppRoutes.chats);
-      return true;
-    } else {
-      return false;
+      Get.offAllNamed(AppRoutes.chats);
+      {}
     }
   }
 
   goToSignUp() {
-    Get.to(SignUpScreen());
+    Get.offAllNamed(AppRoutes.signUp);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:link_up/constants/app_routes.dart';
 import 'package:link_up/view/screens/sign_in_with_google.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -55,6 +56,6 @@ class SignUpController extends GetxController {
   }
 
   goToSignIn() {
-    Get.to(SignInWithGoogle());
+    Get.offAllNamed(AppRoutes.signInWithGoogle);
   }
 }
