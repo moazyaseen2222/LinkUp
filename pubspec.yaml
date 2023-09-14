@@ -44,9 +44,20 @@ dependencies:
   lottie: ^2.6.0
 
 
+
 dev_dependencies:
+  flutter_native_splash: ^2.3.2
   flutter_test:
     sdk: flutter
+
+flutter_native_splash:
+  color: '0xff377DFF'
+#  image: images/second_chat_image.png
+#  android_gravity: fill
+  android: true
+  ios: true
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -95,3 +106,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+# flutter_native_splash-development.yaml
+
+
+
+
+

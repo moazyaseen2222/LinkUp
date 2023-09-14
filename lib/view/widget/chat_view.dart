@@ -7,8 +7,11 @@ import '../../constants/app_fonts.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({
-    super.key,
+    super.key, required this.name,  required this.image,
   });
+
+  final String name;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class ChatView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Annette Black',
+                  name,
                   style: TextStyle(
                       fontFamily: AppFonts.inter,
                       fontSize: 16.sp,

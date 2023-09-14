@@ -29,6 +29,7 @@ class SignInWithGoogleController extends GetxController {
     super.onClose();
   }
 
+
   back() {
     Get.offAllNamed(AppRoutes.signIn);
   }

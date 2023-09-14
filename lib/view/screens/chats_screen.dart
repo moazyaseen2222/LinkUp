@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:link_up/view/widget/chat_view.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_fonts.dart';
@@ -26,14 +28,18 @@ class _ChatsScreenState extends State<ChatsScreen>
     super.initState();
   }
 
+  final supabase = Supabase.instance.client;
+
   @override
   Widget build(BuildContext context) {
+    final stream = supabase.from('contacts').stream(primaryKey: ['id']);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
-            padding:  const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             unselectedLabelStyle: const TextStyle(fontFamily: AppFonts.inter),
             tabs: const [
               Tab(
@@ -65,148 +71,189 @@ class _ChatsScreenState extends State<ChatsScreen>
           leading: IconButton(
               tooltip: 'Logout',
               onPressed: () {
-                chatsController.logout();
+                Get.defaultDialog(
+                  title: "Exit",
+                  content: Text("Sure to leave?"),
+                  confirm: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.main3Colors),
+                    onPressed: () {
+                      chatsController.logout();
+                      //Get.back(); // Close the dialog
+                    },
+                    child: Text("Confirm"),
+                  ),
+                  cancel: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.main2Colors),
+                    onPressed: () {
+                      Get.back(); // Close the dialog
+                    },
+                    child: Text("Cancel"),
+                  ),
+                );
+                //
               },
               icon: const Icon(Icons.logout_sharp)),
         ),
-        body: TabBarView(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  IndexedStack(
+        body: StreamBuilder<List<Map<String, dynamic>>>(
+          stream: stream,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: SpinKitChasingDots(
+                  color: AppColors.mainColors,
+                ),
+              );
+            }
+            final names = snapshot.data!;
+            return TabBarView(
+              children: [
+                SingleChildScrollView(
+                  child: Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 28.0.w),
-                        child: const Stack(
-                          children: [
-                            Column(
+                      IndexedStack(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 28.0.w),
+                            child: Stack(
                               children: [
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
-                                ChatView(),
+                                SizedBox(
+                                  height: 200.h,
+                                  child: ListView.builder(
+                                    itemCount: names.length,
+                                    itemBuilder: (context, index) {
+                                      return Column(
+                                        children: [
+                                          ChatView(
+                                            name: names[index]['contact_name'],
+                                            image: 'images/person.png',
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                )
+
+                                ///
                               ],
                             ),
-
-                            ///
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: 20.h),
+                        ],
                       ),
-                      SizedBox(height: 20.h),
                     ],
                   ),
-                ],
-              ),
-            ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  IndexedStack(
+                ),
+                SingleChildScrollView(
+                  child: Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                        child: const Stack(
-                          children: [
-                            Column(
+                      IndexedStack(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                            child: const Stack(
                               children: [
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Alex Param',
-                                  date: 'Today,10:20',
-                                  isCome: true,
+                                Column(
+                                  children: [
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Alex Param',
+                                      date: 'Today,10:20',
+                                      isCome: true,
+                                    ),
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Moaz Yaseen',
+                                      date: 'yesterday,6:11',
+                                      isCome: false,
+                                    ),
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Mohammed ali',
+                                      date: 'Today,5:01',
+                                      isCome: true,
+                                    ),
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Alex Param',
+                                      date: 'Today,10:20',
+                                      isCome: true,
+                                    ),
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Moaz Yaseen',
+                                      date: 'yesterday,6:11',
+                                      isCome: false,
+                                    ),
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Mohammed ali',
+                                      date: 'Today,5:01',
+                                      isCome: true,
+                                    ),
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Alex Param',
+                                      date: 'Today,10:20',
+                                      isCome: true,
+                                    ),
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Moaz Yaseen',
+                                      date: 'yesterday,6:11',
+                                      isCome: false,
+                                    ),
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Mohammed ali',
+                                      date: 'Today,5:01',
+                                      isCome: true,
+                                    ),
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Alex Param',
+                                      date: 'Today,10:20',
+                                      isCome: true,
+                                    ),
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Moaz Yaseen',
+                                      date: 'yesterday,6:11',
+                                      isCome: false,
+                                    ),
+                                    CallCounter(
+                                      image: AssetImage('images/person.png'),
+                                      name: 'Mohammed ali',
+                                      date: 'Today,5:01',
+                                      isCome: true,
+                                    ),
+                                  ],
                                 ),
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Moaz Yaseen',
-                                  date: 'yesterday,6:11',
-                                  isCome: false,
-                                ),
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Mohammed ali',
-                                  date: 'Today,5:01',
-                                  isCome: true,
-                                ),
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Alex Param',
-                                  date: 'Today,10:20',
-                                  isCome: true,
-                                ),
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Moaz Yaseen',
-                                  date: 'yesterday,6:11',
-                                  isCome: false,
-                                ),
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Mohammed ali',
-                                  date: 'Today,5:01',
-                                  isCome: true,
-                                ),
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Alex Param',
-                                  date: 'Today,10:20',
-                                  isCome: true,
-                                ),
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Moaz Yaseen',
-                                  date: 'yesterday,6:11',
-                                  isCome: false,
-                                ),
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Mohammed ali',
-                                  date: 'Today,5:01',
-                                  isCome: true,
-                                ),
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Alex Param',
-                                  date: 'Today,10:20',
-                                  isCome: true,
-                                ),
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Moaz Yaseen',
-                                  date: 'yesterday,6:11',
-                                  isCome: false,
-                                ),
-                                CallCounter(
-                                  image: AssetImage('images/person.png'),
-                                  name: 'Mohammed ali',
-                                  date: 'Today,5:01',
-                                  isCome: true,
-                                ),
+
+                                ///
                               ],
                             ),
-
-                            ///
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: 20.h),
+                        ],
                       ),
-                      SizedBox(height: 20.h),
                     ],
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+            // return ListView.builder(
+            //   itemCount: names.length,
+            //   itemBuilder: (context, index) {
+            //     return ListTile(
+            //       title: Text(names[index]['contact_name']),
+            //     );
+            //   },
+            // );
+          },
         ),
+
         // ListView(
         //   children: [
         //     Column(
@@ -255,7 +302,7 @@ class _ChatsScreenState extends State<ChatsScreen>
         //           ),
         //         ),
         //
-        //Tab Bar
+        // Tab Bar
         // Padding(
         //   padding: EdgeInsets.symmetric(horizontal: 24.0.w),
         //   child: Container(
@@ -306,6 +353,7 @@ class _ChatsScreenState extends State<ChatsScreen>
         //
         //   ],
         // ),
+
         floatingActionButton: Container(
           height: 70.w,
           width: 70.w,

@@ -47,6 +47,9 @@ class SignUpController extends GetxController {
 
     final response =
         await supabase.auth.signUp(email: email, password: password);
+    await supabase
+        .from('contact')
+        .insert({'id': response.user!.id, 'username': 'User ${emailController.text.trim()}'}).execute();
     if (response.user != null) {
       Get.to(SignInWithGoogle());
       print('User Sign Up Tamam!');
